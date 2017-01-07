@@ -22,6 +22,16 @@ class AsynchronousFileReaderTest(unittest.TestCase):
 
         self.assertEqual(['line1\n', 'line2\n'], lines)
 
+    def test_with(self):
+        data_stream = StringIO('line1\nline2\n')
+        with AsynchronousFileReader(data_stream) as reader:
+            lines = []
+            while not reader.eof():
+                for line in reader.readlines():
+                    lines.append(line)
+
+        self.assertEqual(['line1\n', 'line2\n'], lines)
+
 
 if __name__ == '__main__':
     unittest.main()
